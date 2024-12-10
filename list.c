@@ -5,7 +5,7 @@
 void iListAdd(iList* node, int data)
 {
 
-    while(node->next == NULL)
+    while(node->next != NULL)
     {
         node = node->next;
     }
@@ -27,10 +27,10 @@ void iListfree(iList* node)
 void iListprint(iList* node)
 {
 
-    while(node->next != NULL)
+    while(node != NULL)
     {
         printf("%d ", node->data);
         node = node->next;
     }
-    
+
 }
