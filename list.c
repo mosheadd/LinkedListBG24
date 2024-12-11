@@ -29,3 +29,36 @@ void iListPrint(iList* list)
 
 }
 
+void iListPushFront(iList** list, int data)
+{
+
+    iList* buf = (iList*)malloc(sizeof(iList));
+
+    buf->data = data;
+    buf->next = (*list);
+
+    (*list) = buf;
+
+}
+
+void iListPushBack(iList* list, int data)
+{
+
+    iList* last = list;
+
+    while(last->next != NULL)
+    {
+
+        last = last->next;
+
+    }
+
+    iList* buf = (iList*)malloc(sizeof(iList));
+
+    buf->data = data;
+    buf->next = NULL;
+
+    last->next = buf;
+
+}
+
