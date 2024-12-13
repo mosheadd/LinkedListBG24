@@ -34,5 +34,7 @@ void iListPopFront(iList** list);
 
 void iListPopBack(iList** list);
 
+void iListPop(iList** list, int i);
+
 
 #endif

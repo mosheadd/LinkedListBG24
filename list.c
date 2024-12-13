@@ -206,7 +206,7 @@ void iListPopFront(iList **list)
 void iListPopBack(iList **list)
 {
 
-    int size = getSize(*list);
+    int size = iListGetSize(*list);
 
     if(size == 0)
         return;
@@ -218,12 +218,51 @@ void iListPopBack(iList **list)
         return;
     }
 
-    iList* last = getElem(*list, size - 1);
-    iList* lastButOne = getElem(*list, size - 2);
+    iList* last = iListGetElem(*list, size - 1);
+    iList* lastButOne = iListGetElem(*list, size - 2);
 
     lastButOne->next = NULL;
 
     free(last);
     last = NULL;
+
+}
+
+void iListPop(iList **list, int i)
+{
+
+    int size = iListGetSize(*list);
+
+    if(i >= size || i < 0)
+    {
+        printf("pop(): Error: wrong index\n\n");
+        return;
+    }
+
+    if(i == 0)
+    {
+        iListPopFront(list);
+        return;
+    }
+
+    iList* curr = *list;
+    iList* after = (*list)->next;
+
+    for(int j = 0;;j++, curr = after, after = after->next)
+    {
+
+        if(j == i - 1)
+        {
+
+            curr->next = after->next;
+
+            free(after);
+            after = NULL;
+
+            return;
+
+        }
+
+    }
 
 }
