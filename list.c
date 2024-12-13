@@ -46,7 +46,7 @@ void iListPrint(iList* list)
 
 }
 
-int iListGetElem(iList *list, int i)
+int iListGetElemVal(iList *list, int i)
 {
 
     for(int j=0;list != NULL;j++)
@@ -64,9 +64,18 @@ int iListGetElem(iList *list, int i)
 
 }
 
-iList *getElem(iList *list, int i)
+int iListGetSize(iList *list)
 {
-    
+    int i=0;
+
+    for(;list != NULL;list = list->next, i++);
+
+    return i;
+}
+
+iList *iListGetElem(iList *list, int i)
+{
+
     for(int j=0;list != NULL;j++)
     {
 

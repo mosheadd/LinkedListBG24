@@ -18,9 +18,11 @@ void iListFree(iList** list);
 
 void iListPrint(iList* list);
 
-int iListGetElem(iList* list, int i);
+int iListGetElemVal(iList* list, int i);
 
-iList* getElem(iList* list, int i);
+int iListGetSize(iList* list);
+
+iList* iListGetElem(iList* list, int i);
 
 void iListPushFront(iList** list, int data);
 
