@@ -183,3 +183,21 @@ void iListInsert(iList **list, int data, int i)
     }
 
 }
+
+
+void iListPopFront(iList **list)
+{
+
+    int size = iListGetSize(*list);
+
+    if(size == 0)
+        return;
+
+    iList* buf = *list;
+
+    *list = (*list)->next;
+
+    free(buf);
+    buf = NULL;
+
+}

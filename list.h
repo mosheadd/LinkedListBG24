@@ -30,5 +30,9 @@ void iListPushBack(iList** list, int data);
 
 void iListInsert(iList** list, int data, int i);
 
+void iListPopFront(iList** list);
+
+void iListPopBack(iList** list);
+
 
 #endif
