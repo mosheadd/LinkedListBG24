@@ -201,3 +201,29 @@ void iListPopFront(iList **list)
     buf = NULL;
 
 }
+
+
+void iListPopBack(iList **list)
+{
+
+    int size = getSize(*list);
+
+    if(size == 0)
+        return;
+
+    if(size == 1)
+    {
+        free(*list);
+        *list = NULL;
+        return;
+    }
+
+    iList* last = getElem(*list, size - 1);
+    iList* lastButOne = getElem(*list, size - 2);
+
+    lastButOne->next = NULL;
+
+    free(last);
+    last = NULL;
+
+}
