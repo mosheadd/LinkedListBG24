@@ -13,3 +13,17 @@ void iListDCreate(iListD **list)
     (*list)->tail = NULL;
 
 }
+
+void iListDFree(iListD **list)
+{
+
+    iNodeD* buf = (*list)->head;
+
+    while(buf != NULL)
+    {
+        free(buf->prev);
+        buf->prev = NULL;
+        buf = buf->next;
+    }
+
+}

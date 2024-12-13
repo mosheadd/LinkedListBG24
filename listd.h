@@ -24,5 +24,7 @@ typedef struct iListD
 
 void iListDCreate(iListD** list);
 
+void iListDFree(iListD** list);
+
 
 #endif
