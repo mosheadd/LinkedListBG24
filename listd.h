@@ -22,4 +22,7 @@ typedef struct iListD
 }iListD;
 
 
+void iListDCreate(iListD** list);
+
+
 #endif
