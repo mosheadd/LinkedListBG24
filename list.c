@@ -14,6 +14,7 @@ void iListCreate(iList** list, int data)
 
 }
 
+
 void iListFree(iList **list)
 {
 
@@ -31,6 +32,7 @@ void iListFree(iList **list)
 
 }
 
+
 void iListPrint(iList* list)
 {
 
@@ -45,6 +47,7 @@ void iListPrint(iList* list)
     printf("\n\n");
 
 }
+
 
 int iListGetElemVal(iList *list, int i)
 {
@@ -64,6 +67,7 @@ int iListGetElemVal(iList *list, int i)
 
 }
 
+
 int iListGetSize(iList *list)
 {
     int i=0;
@@ -72,6 +76,7 @@ int iListGetSize(iList *list)
 
     return i;
 }
+
 
 iList *iListGetElem(iList *list, int i)
 {
@@ -90,6 +95,7 @@ iList *iListGetElem(iList *list, int i)
     return NULL;
 }
 
+
 void iListPushFront(iList** list, int data)
 {
 
@@ -101,6 +107,7 @@ void iListPushFront(iList** list, int data)
     (*list) = buf;
 
 }
+
 
 void iListPushBack(iList** list, int data)
 {
@@ -129,3 +136,50 @@ void iListPushBack(iList** list, int data)
 
 }
 
+
+void iListInsert(iList **list, int data, int i)
+{
+
+    int size = iListGetSize(*list);
+
+    if(i < 0 || i > size)
+    {
+        printf("iListInsert(): Error: wrong index\n\n");
+        return;
+    }
+
+    if(i == 0)
+    {
+        iListPushFront(list, data);
+        return;
+    }
+
+    if(i == size)
+    {
+        iListPushBack(list, data);
+        return;
+    }
+
+    iList* curr = *list;
+    iList* after = (*list)->next;
+
+    for(int j=0;;j++, curr = after, after = after->next)
+    {
+
+        if(j == i)
+        {
+
+            iList* buf = (iList*)malloc(sizeof(iList));
+
+            buf->data = data;
+            buf->next = after;
+
+            curr->next = buf;
+
+            return;
+
+        }
+
+    }
+
+}
