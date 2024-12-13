@@ -14,6 +14,23 @@ void iListCreate(iList** list, int data)
 
 }
 
+void iListFree(iList **list)
+{
+
+    iList* buf = NULL;
+
+    while((*list) != NULL)
+    {
+
+        buf = *list;
+        (*list) = (*list)->next;
+        free(buf);
+        buf = NULL;
+
+    }
+
+}
+
 void iListPrint(iList* list)
 {
 
@@ -29,6 +46,41 @@ void iListPrint(iList* list)
 
 }
 
+int iListGetElem(iList *list, int i)
+{
+
+    for(int j=0;list != NULL;j++)
+    {
+
+        if(j == i)
+            return list->data;
+
+        list = list->next;
+
+    }
+
+    printf("getElemVal(): Error\n");
+    return -2147483646;
+
+}
+
+iList *getElem(iList *list, int i)
+{
+    
+    for(int j=0;list != NULL;j++)
+    {
+
+        if(j == i)
+            return list;
+
+        list = list->next;
+
+    }
+
+    printf("getElem(): Error\n");
+    return NULL;
+}
+
 void iListPushFront(iList** list, int data)
 {
 
@@ -41,10 +93,16 @@ void iListPushFront(iList** list, int data)
 
 }
 
-void iListPushBack(iList* list, int data)
+void iListPushBack(iList** list, int data)
 {
 
-    iList* last = list;
+    if((*list) == NULL)
+    {
+        iListPushFront(list, data);
+        return;
+    }
+
+    iList* last = *list;
 
     while(last->next != NULL)
     {
