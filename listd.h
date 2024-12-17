@@ -26,5 +26,9 @@ void iListDCreate(iListD** list);
 
 void iListDFree(iListD** list);
 
+void iListDPrint(iListD* list);
+
+void iListDPrintReverse(iListD* list);
+
 
 #endif

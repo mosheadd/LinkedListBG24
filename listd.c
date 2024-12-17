@@ -26,4 +26,37 @@ void iListDFree(iListD **list)
         buf = buf->next;
     }
 
+    free((*list)->tail);
+    (*list)->tail = NULL;
+
+}
+
+void iListDPrint(iListD *list)
+{
+
+    iNodeD* curr = list->head;
+
+    while(curr != NULL)
+    {
+        printf("%d ", curr->data);
+        curr = curr->next;
+    }
+
+    printf("\n\n");
+
+}
+
+void iListDPrintReverse(iListD *list)
+{
+    
+    iNodeD* curr = list->tail;
+
+    while(curr != NULL)
+    {
+        printf("%d ", curr->data);
+        curr = curr->prev;
+    }
+
+    printf("\n\n");
+
 }
