@@ -30,5 +30,7 @@ void iListDPrint(iListD* list);
 
 void iListDPrintReverse(iListD* list);
 
+void iListDGetSize(iListD* list);
+
 
 #endif

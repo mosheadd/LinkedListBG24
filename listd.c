@@ -48,7 +48,7 @@ void iListDPrint(iListD *list)
 
 void iListDPrintReverse(iListD *list)
 {
-    
+
     iNodeD* curr = list->tail;
 
     while(curr != NULL)
@@ -60,3 +60,19 @@ void iListDPrintReverse(iListD *list)
     printf("\n\n");
 
 }
+
+void iListDGetSize(iListD *list)
+{
+
+    int i = 0;
+
+    iNodeD* curr = list->head;
+
+    for(;curr!=NULL;curr = curr->next, i++);
+
+    return i;
+
+}
+
+
+
