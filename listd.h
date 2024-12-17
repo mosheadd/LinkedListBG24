@@ -41,6 +41,8 @@ void iListDPushBack(iListD** list, int data);
 
 void iListDInsert(iListD** list, int data, int i);
 
+void iListDPopFront(iListD** list);
 
+void iListDPopBack(iListD** list);
 
 #endif

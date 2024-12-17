@@ -191,3 +191,63 @@ void iListDInsert(iListD **list, int data, int i)
 
 
 }
+
+
+void iListDPopFront(iListD **list)
+{
+
+    if((*list)->size == 0)
+    {
+        printf("iListDPopFront: Error\n\n");
+        return;
+    }
+
+    iNodeD* buf = (*list)->head;
+
+    if((*list)->size == 1)
+    {
+        (*list)->head = NULL;
+        (*list)->tail = NULL;
+    }
+    else
+    {
+        (*list)->head->next->prev = NULL;
+        (*list)->head = (*list)->head->next;
+    }
+
+    free(buf);
+    buf = NULL;
+
+    (*list)->size--;
+
+}
+
+
+void iListDPopBack(iListD **list)
+{
+
+    if((*list)->size == 0)
+    {
+        printf("iListDPopBack: Error\n\n");
+        return;
+    }
+
+    iNodeD* buf = (*list)->tail;
+
+    if((*list)->size == 1)
+    {
+        (*list)->head = NULL;
+        (*list)->tail = NULL;
+    }
+    else
+    {
+        (*list)->tail->prev->next = NULL;
+        (*list)->tail = (*list)->tail->prev;
+    }
+
+    free(buf);
+    buf = NULL;
+
+    (*list)->size--;
+
+}
