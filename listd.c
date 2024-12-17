@@ -251,3 +251,33 @@ void iListDPopBack(iListD **list)
     (*list)->size--;
 
 }
+
+
+void iListDErase(iListD **list, int i)
+{
+
+    if(i < 0 || i > (*list)->size)
+    {
+        printf("iListDErase: Error\n\n");
+        return;
+    }
+
+    iNodeD* iElem = iListDGetElem(*list, i);
+
+    if(iElem->prev)
+        iElem->prev->next = iElem->next;
+    else
+        (*list)->head = iElem->next;
+    
+    if(iElem->next)
+        iElem->next->prev = iElem->prev;
+    else
+        (*list)->tail = iElem->prev;
+
+    free(iElem);
+    iElem = NULL;
+
+    (*list)->size--;
+
+}
+

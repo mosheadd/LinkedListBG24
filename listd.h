@@ -45,4 +45,6 @@ void iListDPopFront(iListD** list);
 
 void iListDPopBack(iListD** list);
 
+void iListDErase(iListD** list, int i);
+
 #endif
