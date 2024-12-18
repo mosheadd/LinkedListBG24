@@ -9,6 +9,9 @@ void iListCreate(iList** list, int data)
 
     *list = (iList*)malloc(sizeof(iList));
 
+    if(!*list)
+        exit(-1);
+
     (*list)->data = data;
     (*list)->next = NULL;
 
@@ -80,9 +83,10 @@ iList *iListGetElem(iList *list, int i)
 void iListPushFront(iList** list, int data)
 {
 
-    iList* buf = (iList*)malloc(sizeof(iList));
+    iList* buf = NULL;
+    
+    iListCreate(&buf, data);
 
-    buf->data = data;
     buf->next = (*list);
 
     (*list) = buf;
@@ -102,15 +106,12 @@ void iListPushBack(iList** list, int data)
     iList* last = *list;
 
     while(last->next != NULL)
-    {
-
         last = last->next;
 
-    }
+    iList* buf = NULL;
 
-    iList* buf = (iList*)malloc(sizeof(iList));
+    iListCreate(&buf, data);
 
-    buf->data = data;
     buf->next = NULL;
 
     last->next = buf;
@@ -131,12 +132,9 @@ void iListInsert(iList **list, int data, int i)
 
     for(int j=0;j<i-1;j++, curr = curr->next);
 
-    iList* buf = (iList*)malloc(sizeof(iList));
+    iList* buf = NULL;
 
-    if(!buf)
-        exit(-1);
-
-    buf->data = data;
+    iListCreate(&buf, data);
 
     if(curr->next)
         buf->next = curr->next;
@@ -151,9 +149,7 @@ void iListInsert(iList **list, int data, int i)
 void iListPopFront(iList **list)
 {
 
-    int size = iListGetSize(*list);
-
-    if(size == 0)
+    if(!(*list))
         return;
 
     iList* buf = *list;
@@ -169,17 +165,17 @@ void iListPopFront(iList **list)
 void iListPopBack(iList **list)
 {
 
-    int size = iListGetSize(*list);
-
-    if(size == 0)
+    if(!(*list))
         return;
 
-    if(size == 1)
+    if((*list)->next == NULL)
     {
         free(*list);
         *list = NULL;
         return;
     }
+
+    int size = iListGetSize(*list);
 
     iList* last = iListGetElem(*list, size - 1);
     iList* lastButOne = iListGetElem(*list, size - 2);
