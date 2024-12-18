@@ -49,25 +49,6 @@ void iListPrint(iList* list)
 }
 
 
-int iListGetElemVal(iList *list, int i)
-{
-
-    for(int j=0;list != NULL;j++)
-    {
-
-        if(j == i)
-            return list->data;
-
-        list = list->next;
-
-    }
-
-    printf("getElemVal(): Error\n");
-    return -2147483646;
-
-}
-
-
 int iListGetSize(iList *list)
 {
     int i=0;

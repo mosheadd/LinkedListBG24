@@ -18,8 +18,6 @@ void iListFree(iList** list);
 
 void iListPrint(iList* list);
 
-int iListGetElemVal(iList* list, int i);
-
 int iListGetSize(iList* list);
 
 iList* iListGetElem(iList* list, int i);
