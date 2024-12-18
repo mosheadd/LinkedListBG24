@@ -121,47 +121,29 @@ void iListPushBack(iList** list, int data)
 void iListInsert(iList **list, int data, int i)
 {
 
-    int size = iListGetSize(*list);
-
-    if(i < 0 || i > size)
-    {
-        printf("iListInsert(): Error: wrong index\n\n");
-        return;
-    }
-
     if(i == 0)
     {
         iListPushFront(list, data);
         return;
     }
 
-    if(i == size)
-    {
-        iListPushBack(list, data);
-        return;
-    }
+    iList* curr = (*list);
 
-    iList* curr = *list;
-    iList* after = (*list)->next;
+    for(int j=0;j<i-1;j++, curr = curr->next);
 
-    for(int j=0;;j++, curr = after, after = after->next)
-    {
+    iList* buf = (iList*)malloc(sizeof(iList));
 
-        if(j == i)
-        {
+    if(!buf)
+        exit(-1);
 
-            iList* buf = (iList*)malloc(sizeof(iList));
+    buf->data = data;
 
-            buf->data = data;
-            buf->next = after;
+    if(curr->next)
+        buf->next = curr->next;
+    else
+        buf->next = NULL;
 
-            curr->next = buf;
-
-            return;
-
-        }
-
-    }
+    curr->next = buf;
 
 }
 
@@ -226,24 +208,18 @@ void iListPop(iList **list, int i)
         return;
     }
 
-    iList* curr = *list;
-    iList* after = (*list)->next;
+    iList* curr = (*list);
 
-    for(int j = 0;;j++, curr = after, after = after->next)
-    {
+    for(int j = 0;j<i-1;j++, curr = curr->next);
 
-        if(j == i - 1)
-        {
+    iList* deleteto = curr->next;
 
-            curr->next = after->next;
+    if(curr->next->next)
+        curr->next = curr->next->next;
+    else
+        curr->next = NULL;
 
-            free(after);
-            after = NULL;
-
-            return;
-
-        }
-
-    }
+    free(deleteto);
+    deleteto = NULL;
 
 }
