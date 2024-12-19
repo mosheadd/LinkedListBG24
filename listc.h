@@ -16,7 +16,7 @@ typedef struct iListC
 
     size_t size;
 
-    struct iNode* head;
+    struct iNode* tail;
 
 } iListC;
 

@@ -26,10 +26,10 @@ void iListCCreate(iListC **list, int data)
     if(!*list)
         exit(-1);
     
-    iNodeInit(&(*list)->head, data);
+    iNodeInit(&(*list)->tail, data);
 
     (*list)->size = 1;
-    (*list)->head->next = (*list)->head;
+    (*list)->tail->next = (*list)->tail;
 
 }
 
@@ -44,14 +44,14 @@ void iListCFree(iListC **list)
 
         if(i == (*list)->size - 1)
         {
-            (*list)->head->next = NULL;
-            free((*list)->head);
-            (*list)->head = NULL;
+            (*list)->tail->next = NULL;
+            free((*list)->tail);
+            (*list)->tail = NULL;
             break;
         }
 
-        buf = (*list)->head;
-        (*list)->head = (*list)->head->next;
+        buf = (*list)->tail;
+        (*list)->tail = (*list)->tail->next;
         free(buf);
         buf = NULL;
 
@@ -63,7 +63,7 @@ void iListCFree(iListC **list)
 void iListCPrint(iListC *list)
 {
 
-    iNode* buf = list->head;
+    iNode* buf = list->tail->next;
 
     for(int i=0;i<list->size;i++)
     {
@@ -87,11 +87,10 @@ iNode *iListCGetElem(iListC *list, int i)
         return NULL;
     }
 
-    iNode* curr = list->head;
+    iNode* curr = list->tail->next;
 
     for(int j = 0;j < i;j++, curr = curr->next);
 
-    printf("getElem(): Error\n");
     return curr;
 }
 
@@ -108,16 +107,9 @@ void iListCPushFront(iListC **list, int data)
     
     iNodeInit(&buf, data);
 
-    buf->next = (*list)->head;
+    buf->next = (*list)->tail->next;
 
-    iNode* last = (*list)->head;
-
-    while(last->next != (*list)->head)
-        last = last->next;
-
-    last->next = buf;
-
-    (*list)->head = buf;
+    (*list)->tail->next = buf;
 
     (*list)->size++;
     
@@ -133,18 +125,14 @@ void iListCPushBack(iListC **list, int data)
         return;
     }
 
-    iNode* last = (*list)->head;
-
-    while(last->next != (*list)->head)
-        last = last->next;
-
     iNode* buf = NULL;
 
     iNodeInit(&buf, data);
 
-    buf->next = (*list)->head;
+    buf->next = (*list)->tail->next;
 
-    last->next = buf;
+    (*list)->tail->next = buf;
+    (*list)->tail = buf;
 
     (*list)->size++;
 
@@ -154,26 +142,20 @@ void iListCPushBack(iListC **list, int data)
 void iListCPopFront(iListC **list)
 {
 
-    iNode* last = (*list)->head;
-
-    while(last->next != (*list)->head)
-        last = last->next;
-
-    if(last == (*list)->head)
+    if((*list)->size == 1)
     {
-        (*list)->head->next = NULL;
-        free((*list)->head);
-        (*list)->head = NULL;
+        (*list)->tail->next = NULL;
+        free((*list)->tail);
+        (*list)->tail = NULL;
         return;
     }
 
-    iNode* buf = (*list)->head;
+    iNode* head = (*list)->tail->next;
 
-    last->next = (*list)->head->next;
-    (*list)->head = (*list)->head->next;
+    (*list)->tail->next = head->next;
 
-    free(buf);
-    buf = NULL;
+    free(head);
+    head = NULL;
 
     (*list)->size--;
 
@@ -182,23 +164,21 @@ void iListCPopFront(iListC **list)
 
 void iListCPopBack(iListC **list)
 {
-
-    iNode* lastbutone = (*list)->head;
-
-    while(lastbutone->next->next != (*list)->head)
-        lastbutone = lastbutone->next;
-
+    
     if((*list)->size == 1)
     {
-        (*list)->head->next = NULL;
-        free((*list)->head);
-        (*list)->head = NULL;
+        (*list)->tail->next = NULL;
+        free((*list)->tail);
+        (*list)->tail = NULL;
         return;
     }
 
-    iNode* last = lastbutone->next;
+    iNode* lastbutone = iListCGetElem(*list, (*list)->size - 2);
+    iNode* last = (*list)->tail;
 
-    lastbutone->next = (*list)->head;
+    lastbutone->next = (*list)->tail->next;
+
+    (*list)->tail = lastbutone;
 
     free(last);
     last = NULL;
