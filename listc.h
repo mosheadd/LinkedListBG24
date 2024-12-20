@@ -34,9 +34,13 @@ void iListCPushFront(iListC** list, int data);
 
 void iListCPushBack(iListC** list, int data);
 
+void iListCInsert(iListC** list, int data, int i);
+
 void iListCPopFront(iListC** list);
 
 void iListCPopBack(iListC** list);
+
+void iListCPop(iListC** list, int i);
 
 
 #endif

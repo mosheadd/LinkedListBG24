@@ -3,7 +3,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "listd.h"
-#include "listc.h"
+
 
 void iNodeInit(iNode **node, int data)
 {
@@ -139,6 +139,32 @@ void iListCPushBack(iListC **list, int data)
 }
 
 
+void iListCInsert(iListC **list, int data, int i)
+{
+
+    if(i == 0)
+    {
+        iListCPushFront(list, data);
+        return;
+    }
+
+    iNode* beforei = iListCGetElem(*list, i - 1);
+
+    iNode* buf = NULL;
+    iNodeInit(&buf, data);
+
+    buf->next = beforei->next;
+    beforei->next = buf;
+
+    if(i == (*list)->size)
+        (*list)->tail = buf;
+
+    (*list)->size++;
+
+
+}
+
+
 void iListCPopFront(iListC **list)
 {
 
@@ -187,3 +213,32 @@ void iListCPopBack(iListC **list)
 
 }
 
+
+void iListCPop(iListC **list, int i)
+{
+
+    if(i < 0 || i >= (*list)->size)
+        return;
+
+    iNode* beforei = NULL;
+
+    if(i == 0)
+        beforei = (*list)->tail;
+    else
+        beforei = iListCGetElem(*list, i - 1);
+    
+    iNode* deleteto = beforei->next;
+
+
+    beforei->next = deleteto->next;
+
+    if(i == (*list)->size - 1)
+        (*list)->tail = beforei;
+
+
+    free(deleteto);
+    deleteto = NULL;
+
+    (*list)->size--;
+
+}
