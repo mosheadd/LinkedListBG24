@@ -13,14 +13,30 @@ iNodeCD *iListCDGetElem(iListCD *list, int i)
     
     if(i < list->size / 2)
     {
-        for(int j = 0; j < i ; j++, list->head = list->head->next);
-        return list->head;
+
+        iNodeCD* curr = list->head;
+
+        for(int j = 0; j < i ; j++, curr = curr->next);
+        return curr;
     }
     iNodeCD* curr = list->head->prev;
 
     for(int j = list->size - 1; j > i; j--, curr = curr->prev);
     return curr;
     
+
+}
+
+
+void iNodeCDInit(iNodeCD **node, int data)
+{
+
+    *node = (iNodeCD*)malloc(sizeof(iNodeCD));
+
+    if(!(*node))
+        exit(-1);
+
+    (*node)->data = data;
 
 }
 
@@ -95,8 +111,8 @@ void iListCDPrintReverse(iListCD *list)
 void iListCDPushFront(iListCD **list, int data)
 {
 
-    iNodeCD* buf = (iNodeCD*)malloc(sizeof(iNodeCD));
-    buf->data = data;
+    iNodeCD* buf = NULL;
+    iNodeCDInit(&buf, data);
 
     if((*list)->head == NULL)
     {
@@ -123,8 +139,8 @@ void iListCDPushFront(iListCD **list, int data)
 void iListCDPushBack(iListCD **list, int data)
 {
 
-    iNodeCD* buf = (iNodeCD*)malloc(sizeof(iNodeCD));
-    buf->data = data;
+    iNodeCD* buf = NULL;
+    iNodeCDInit(&buf, data);
 
     if((*list)->head == NULL)
     {
@@ -140,6 +156,37 @@ void iListCDPushBack(iListCD **list, int data)
 
     (*list)->head->prev->next = buf;
     (*list)->head->prev = buf;
+
+    (*list)->size++;
+
+}
+
+
+void iListCDInsert(iListCD **list, int data, int i)
+{
+
+    if(i < 0 || i > (*list)->size)
+        return;
+
+    if(i == (*list)->size)
+    {
+        iListCDPushBack(list, data);
+        return;
+    }
+
+    iNodeCD* curr = iListCDGetElem(*list, i);
+
+    iNodeCD* buf = NULL;
+    iNodeCDInit(&buf, data);
+
+    buf->next = curr;
+    buf->prev = curr->prev;
+
+    curr->prev->next = buf;
+    curr->prev = buf;
+
+    if(i == 0)
+        (*list)->head = buf;
 
     (*list)->size++;
 
@@ -195,6 +242,30 @@ void iListCDPopBack(iListCD **list)
 
     free(last);
     last = NULL;
+
+    (*list)->size--;
+
+}
+
+
+void iListCDErase(iListCD **list, int i)
+{
+
+    if(i < 0 || i > (*list)->size)
+        return;
+
+    iNodeCD* deleteto = iListCDGetElem(*list, i);
+
+    deleteto->prev->next = deleteto->next;
+    deleteto->next->prev = deleteto->prev;
+
+    if((*list)->size == 1)
+        (*list)->head = NULL;
+    else if(i == 0)
+        (*list)->head = deleteto->next;
+
+    free(deleteto);
+    deleteto = NULL;
 
     (*list)->size--;
 

@@ -24,6 +24,8 @@ typedef struct iListCD
 
 iNodeCD* iListCDGetElem(iListCD* list, int i);
 
+void iNodeCDInit(iNodeCD** node, int data);
+
 void iListCDCreate(iListCD** list);
 
 void iListCDFree(iListCD** list);
@@ -36,8 +38,13 @@ void iListCDPushFront(iListCD** list, int data);
 
 void iListCDPushBack(iListCD** list, int data);
 
+void iListCDInsert(iListCD** list, int data, int i);
+
 void iListCDPopFront(iListCD** list);
 
 void iListCDPopBack(iListCD** list);
+
+void iListCDErase(iListCD** list, int i);
+
 
 #endif
