@@ -46,6 +46,9 @@ void iListCDCreate(iListCD **list)
 
     *list = (iListCD*)malloc(sizeof(iListCD));
 
+    if(!(*list))
+        exit(-1);
+
     (*list)->head = NULL;
     (*list)->size = 0;
 

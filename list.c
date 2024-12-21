@@ -65,18 +65,18 @@ int iListGetSize(iList *list)
 iList *iListGetElem(iList *list, int i)
 {
 
-    for(int j=0;list != NULL;j++)
+    if(i < 0)
+        return NULL;
+
+    for(int j=0;j < i;j++, list = list->next)
     {
 
-        if(j == i)
-            return list;
-
-        list = list->next;
+        if(list == NULL)
+            return NULL;
 
     }
 
-    printf("getElem(): Error\n");
-    return NULL;
+    return list;
 }
 
 
@@ -122,11 +122,14 @@ void iListPushBack(iList** list, int data)
 void iListInsert(iList **list, int data, int i)
 {
 
-    if(i == 0)
+    if(i == 0 || ((*list) == NULL) && i == 0)
     {
         iListPushFront(list, data);
         return;
     }
+
+    if(((*list) == NULL) && i > 0)
+        return;
 
     iList* curr = (*list);
 
